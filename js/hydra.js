@@ -47,7 +47,15 @@
       });
 
       for (var i = type.properties.length - 1; i >= 0; i--) {
-        var rangeDef = this.getElementDefinition(type.properties[i].range);
+        var range = type.properties[i].range;
+        // range can be an array
+        if (range instanceof Array
+          && range.length > 0
+        ) {
+          range = range[0]
+        }
+
+        var rangeDef = this.getElementDefinition(range);
         if (rangeDef) {
           type.properties[i]['rangeLabel'] = (rangeDef.hydra_title)
             ? rangeDef.hydra_title
@@ -98,7 +106,15 @@
       }
 
       if (element && element.range) {
-        var rangeDef = this.getElementDefinition(element.range, vocab);
+        var range = element.range
+        // range can be an array
+        if (range instanceof Array
+          && range.length > 0
+        ) {
+          range = range[0]
+        }
+
+        var rangeDef = this.getElementDefinition(range, vocab);
 
         if (rangeDef.supportedOperations && (rangeDef.supportedOperations.length > 0)) {
           if (!element.supportedOperations) {
